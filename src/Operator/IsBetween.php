@@ -23,7 +23,7 @@ class IsBetween extends AbstractOperator
 
         if (!is_null($this->start) && !is_null($this->end)) {
             $operator = $this->isNot ? "IS NOT BETWEEN" : "IS BETWEEN";
-            return "{$this->field} $operator ? AND ?";
+            return "{$this->field} $operator {$this->valuePlaceholder} AND {$this->valuePlaceholder}";
         } else if (is_null($this->end))
             $operator = $this->isNot ? "<" : ">=";
         else if (is_null($this->start))
@@ -31,7 +31,7 @@ class IsBetween extends AbstractOperator
         else
             throw new Exception("IsBetween seems not to be configured");
 
-        return "{$this->field} $operator ?";
+        return "{$this->field} $operator {$this->valuePlaceholder}";
     }
 
     public function values()

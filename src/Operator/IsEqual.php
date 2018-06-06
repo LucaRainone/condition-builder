@@ -16,6 +16,8 @@ class IsEqual extends AbstractOperator
     public function build():String
     {
 
+        parent::build();
+
         if (is_array($this->rightOperand)) {
             $operator = $this->isNot ? "NOT IN" : "IN";
             $condition = "{$this->leftOperand} $operator (" . implode(",", array_fill(0, count($this->rightOperand), $this->valuePlaceholder)) . ")";

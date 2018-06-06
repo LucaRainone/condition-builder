@@ -16,6 +16,7 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
 
     public function build():String
     {
+        parent::build();
         return "{$this->leftOperand} {$this->operator} {$this->valuePlaceholder}";
     }
 

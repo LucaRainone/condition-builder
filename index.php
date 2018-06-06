@@ -7,8 +7,7 @@ use rain1\ConditionBuilder\Operator\IsEqual;
 use rain1\ConditionBuilder\Operator\IsLess;
 use rain1\ConditionBuilder\Operator\IsNotEqual;
 
-$loader = require __DIR__ . '/vendor/autoload.php';
-$loader->addPsr4('rain1\\ConditionBuilder\\', __DIR__);
+require __DIR__ . '/vendor/autoload.php';
 
 $condition = new ConditionBuilder("and");
 

@@ -2,12 +2,7 @@
 
 namespace rain1\ConditionBuilder\Operator;
 
-class IsLess extends AbstractLeftRightOperator
+class IsLess extends IsGreaterOrEqual
 {
-    protected $operator = "<";
-
-    public function build():String {
-        $this->operator = $this->isNot? ">=" : "<";
-        return parent::build();
-    }
+    protected $isNot = true;
 }

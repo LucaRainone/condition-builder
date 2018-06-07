@@ -2,6 +2,8 @@
 
 namespace rain1\ConditionBuilder\Operator;
 
+use rain1\ConditionBuilder\Expression\ExpressionInterface;
+
 class IsEqual extends AbstractOperator
 {
     private $leftOperand;
@@ -23,7 +25,11 @@ class IsEqual extends AbstractOperator
             $condition = "{$this->leftOperand} $operator (" . implode(",", array_fill(0, count($this->rightOperand), $this->valuePlaceholder)) . ")";
         } else {
             $operator = $this->isNot ? "!=" : "=";
-            $condition = "{$this->leftOperand} $operator {$this->valuePlaceholder}";
+
+            $rightOperand = $this->rightOperand instanceof ExpressionInterface?
+                $this->rightOperand->__toString() : $this->valuePlaceholder;
+
+            $condition = "{$this->leftOperand} $operator {$rightOperand}";
         }
         return $condition;
     }
@@ -38,6 +44,11 @@ class IsEqual extends AbstractOperator
 
     public function values()
     {
+
+        if($this->rightOperand instanceof ExpressionInterface)
+            return [];
+
         return is_array($this->rightOperand) ? $this->rightOperand : [$this->rightOperand];
+
     }
 }

@@ -2,6 +2,8 @@
 
 namespace rain1\ConditionBuilder\Operator;
 
+use rain1\ConditionBuilder\Expression\ExpressionInterface;
+
 abstract class AbstractLeftRightOperator extends AbstractOperator {
 
     protected $leftOperand;
@@ -17,7 +19,10 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
     public function build():String
     {
         parent::build();
-        return "{$this->leftOperand} {$this->operator} {$this->valuePlaceholder}";
+
+        $operand = $this->fetchPlaceholderOrExpressionString($this->rightOperand);
+
+        return "{$this->leftOperand} {$this->operator} {$operand}";
     }
 
     public function isConfigured()
@@ -27,7 +32,7 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
 
     public function values()
     {
-        return is_array($this->rightOperand) ? $this->rightOperand : [$this->rightOperand];
+        return $this->rightOperand instanceof ExpressionInterface? [] : [$this->rightOperand];
     }
 
 }

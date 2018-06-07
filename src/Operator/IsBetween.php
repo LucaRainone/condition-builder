@@ -2,6 +2,8 @@
 
 namespace rain1\ConditionBuilder\Operator;
 
+use rain1\ConditionBuilder\Expression\ExpressionInterface;
+
 class IsBetween extends AbstractOperator
 {
 
@@ -21,24 +23,38 @@ class IsBetween extends AbstractOperator
 
         parent::build();
 
-        if (!is_null($this->start) && !is_null($this->end)) {
-            $operator = $this->isNot ? "IS NOT BETWEEN" : "IS BETWEEN";
-            return "{$this->field} $operator {$this->valuePlaceholder} AND {$this->valuePlaceholder}";
-        } else if (is_null($this->end))
+        return !is_null($this->start) && !is_null($this->end)? $this->_buildFull() : $this->_buildWithOneLimit();
+    }
+
+    private function _buildFull() {
+        $operator = $this->isNot ? "NOT BETWEEN" : "BETWEEN";
+
+        $firstCustomOperand = $this->fetchPlaceholderOrExpressionString($this->start);
+        $secondCustomOperand = $this->fetchPlaceholderOrExpressionString($this->end);
+
+        return "{$this->field} $operator {$firstCustomOperand} AND {$secondCustomOperand}";
+    }
+
+    private function _buildWithOneLimit() {
+
+        if (is_null($this->end)) {
             $operator = $this->isNot ? "<" : ">=";
-        else if (is_null($this->start))
+            $operand = $this->fetchPlaceholderOrExpressionString($this->start);
+        }
+        else if (is_null($this->start)) {
             $operator = $this->isNot ? ">" : "<=";
-        else
+            $operand = $this->fetchPlaceholderOrExpressionString($this->end);
+        } else
             throw new Exception("IsBetween seems not to be configured");
 
-        return "{$this->field} $operator {$this->valuePlaceholder}";
+        return "{$this->field} $operator {$operand}";
     }
 
     public function values()
     {
         return array_values(
             array_filter([$this->start, $this->end], function ($el) {
-                return !is_null($el);
+                return !is_null($el) && !($el instanceof ExpressionInterface);
             })
         );
     }

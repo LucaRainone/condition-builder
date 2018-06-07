@@ -3,6 +3,7 @@
 namespace rain1\ConditionBuilder\Operator\test;
 
 use PHPUnit\Framework\TestCase;
+use rain1\ConditionBuilder\Expression\Expression;
 use rain1\ConditionBuilder\Operator\Exception;
 use rain1\ConditionBuilder\Operator\IsNotEqual;
 
@@ -48,5 +49,9 @@ class IsNotEqualTest extends TestCase
         $isNotEqual->build();
     }
 
-
+    public function testExpression() {
+        $isNotEqual = new IsNotEqual("a", new Expression("NOW()"));
+        self::assertEquals("a != NOW()", $isNotEqual->build());
+        self::assertEquals([], $isNotEqual->values());
+    }
 }

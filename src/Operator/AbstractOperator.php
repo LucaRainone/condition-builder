@@ -3,6 +3,8 @@
 namespace rain1\ConditionBuilder\Operator;
 
 
+use rain1\ConditionBuilder\Expression\ExpressionInterface;
+
 abstract class AbstractOperator implements OperatorInterface
 {
 
@@ -24,6 +26,10 @@ abstract class AbstractOperator implements OperatorInterface
             throw new Exception("Operator::build must be called only if operator is configured");
 
         return "";
+    }
+
+    protected function fetchPlaceholderOrExpressionString($value) {
+        return $value instanceof ExpressionInterface? $value->__toString() : $this->valuePlaceholder;
     }
 
 }

@@ -3,6 +3,7 @@
 namespace rain1\ConditionBuilder\Operator\test;
 
 use PHPUnit\Framework\TestCase;
+use rain1\ConditionBuilder\Expression\Expression;
 use rain1\ConditionBuilder\Operator\Exception;
 use rain1\ConditionBuilder\Operator\IsGreater;
 
@@ -33,5 +34,10 @@ class IsGreaterTest extends TestCase
         $isGreater->build();
     }
 
+    public function testExpression() {
+        $isGreater = new IsGreater("a", new Expression("NOW()"));
+        self::assertEquals("a > NOW()", $isGreater->build());
+        self::assertEquals([], $isGreater->values());
+    }
 
 }

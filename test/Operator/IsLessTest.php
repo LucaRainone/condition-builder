@@ -3,6 +3,7 @@
 namespace rain1\ConditionBuilder\Operator\test;
 
 use PHPUnit\Framework\TestCase;
+use rain1\ConditionBuilder\Expression\Expression;
 use rain1\ConditionBuilder\Operator\Exception;
 use rain1\ConditionBuilder\Operator\IsLess;
 
@@ -31,6 +32,12 @@ class IsLessTest extends TestCase
         $this->expectException(Exception::class);
         $isLess = new IsLess("a",null);
         $isLess->build();
+    }
+
+    public function testExpression() {
+        $isLess = new IsLess("a", new Expression("NOW()"));
+        self::assertEquals("a < NOW()", $isLess->build());
+        self::assertEquals([], $isLess->values());
     }
 
 

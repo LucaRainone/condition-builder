@@ -3,6 +3,7 @@
 namespace rain1\ConditionBuilder\Operator\test;
 
 use PHPUnit\Framework\TestCase;
+use rain1\ConditionBuilder\Expression\Expression;
 use rain1\ConditionBuilder\Operator\Exception;
 use rain1\ConditionBuilder\Operator\IsEqual;
 
@@ -44,15 +45,20 @@ class IsEqualTest extends TestCase
 
     public function testNotConfigured() {
         $this->expectException(Exception::class);
-        $isEqual = new isEqual("a",null);
+        $isEqual = new IsEqual("a",null);
         $isEqual->build();
     }
 
     public function testNotConfiguredArray() {
         $this->expectException(Exception::class);
-        $isEqual = new isEqual("a",[]);
+        $isEqual = new IsEqual("a",[]);
         $isEqual->build();
     }
 
+    public function testExpression() {
+        $isEqual = new IsEqual("a", new Expression("NOW()"));
+        self::assertEquals("a = NOW()", $isEqual->build());
+        self::assertEquals([], $isEqual->values());
+    }
 
 }

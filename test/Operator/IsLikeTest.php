@@ -3,6 +3,7 @@
 namespace rain1\ConditionBuilder\Operator\test;
 
 use PHPUnit\Framework\TestCase;
+use rain1\ConditionBuilder\Expression\Expression;
 use rain1\ConditionBuilder\Operator\Exception;
 use rain1\ConditionBuilder\Operator\IsLike;
 
@@ -33,5 +34,9 @@ class IsLikeTest extends TestCase
         $isLike->build();
     }
 
-
+    public function testExpression() {
+        $isLike = new IsLike("a", new Expression("NOW()"));
+        self::assertEquals("a LIKE NOW()", $isLike->build());
+        self::assertEquals([], $isLike->values());
+    }
 }

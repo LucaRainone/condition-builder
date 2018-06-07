@@ -48,5 +48,11 @@ class IsEqualTest extends TestCase
         $isEqual->build();
     }
 
+    public function testNotConfiguredArray() {
+        $this->expectException(Exception::class);
+        $isEqual = new isEqual("a",[]);
+        $isEqual->build();
+    }
+
 
 }

@@ -30,6 +30,9 @@ class IsEqual extends AbstractOperator
 
     public function isConfigured()
     {
+        if(is_array($this->rightOperand))
+            return !empty($this->rightOperand);
+
         return !is_null($this->rightOperand);
     }
 

@@ -50,7 +50,7 @@ class IsBetween extends AbstractOperator
         return "{$this->field} $operator {$operand}";
     }
 
-    public function values()
+    public function values():array
     {
         return array_values(
             array_filter([$this->start, $this->end], function ($el) {

@@ -30,7 +30,7 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
         return !is_null($this->rightOperand);
     }
 
-    public function values()
+    public function values():array
     {
         return $this->rightOperand instanceof ExpressionInterface? [] : [$this->rightOperand];
     }

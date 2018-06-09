@@ -91,6 +91,10 @@ class DummyOperator implements OperatorInterface
 
     protected $_isConfigured;
 
+    public function configure($conf)
+    {
+    }
+
     public function __construct($isConfigured = true)
     {
         $this->_isConfigured = $isConfigured;
@@ -101,7 +105,7 @@ class DummyOperator implements OperatorInterface
         return "a DUMMY_OP b";
     }
 
-    public function values()
+    public function values():array
     {
         return [1, 2, 3];
     }

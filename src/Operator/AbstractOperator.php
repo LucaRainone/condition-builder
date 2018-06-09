@@ -16,7 +16,7 @@ abstract class AbstractOperator implements OperatorInterface
         return $this;
     }
 
-    public function configureValuePlaceholder($placeholder) {
+    public function configure($placeholder) {
         $this->valuePlaceholder = $placeholder;
     }
 

@@ -42,7 +42,7 @@ class IsEqual extends AbstractOperator
         return !is_null($this->rightOperand);
     }
 
-    public function values()
+    public function values():array
     {
 
         if($this->rightOperand instanceof ExpressionInterface)

@@ -24,7 +24,7 @@ class IsNull extends AbstractOperator
         return "{$this->field} $operator";
     }
 
-    public function values()
+    public function values():array
     {
         return [];
     }

@@ -20,18 +20,31 @@ class IsEqual extends AbstractOperator
 
         parent::build();
 
+        $placeholder = $this->getConfiguration()->getPlaceholder();
+
         if (is_array($this->rightOperand)) {
-            $operator = $this->isNot ? "NOT IN" : "IN";
-            $condition = "{$this->leftOperand} $operator (" . implode(",", array_fill(0, count($this->rightOperand), $this->valuePlaceholder)) . ")";
+            $condition = $this->_buildInOperatorCondition($this->leftOperand, $this->rightOperand, $placeholder);
         } else {
-            $operator = $this->isNot ? "!=" : "=";
-
-            $rightOperand = $this->rightOperand instanceof ExpressionInterface?
-                $this->rightOperand->__toString() : $this->valuePlaceholder;
-
-            $condition = "{$this->leftOperand} $operator {$rightOperand}";
+            $condition = $this->_buildEqualOperatorCondition($this->leftOperand, $this->rightOperand, $placeholder);
         }
         return $condition;
+    }
+
+    private function _buildInOperatorCondition(string $left, array $right, string $placeholder) {
+        $operator = $this->isNot ? "NOT IN" : "IN";
+        return "$left $operator (" .
+            $this->_commaSeparatedPlaceholder(count($right), $placeholder) .
+            ")";
+    }
+
+    private function _buildEqualOperatorCondition(string $left, $right, string $placeholder) {
+        $operator = $this->isNot ? "!=" : "=";
+        $right = $right instanceof ExpressionInterface? $right->__toString() : $placeholder;
+        return "$left $operator $right";
+    }
+
+    private function _commaSeparatedPlaceholder(int $count, string $placeholder):string {
+        return implode(",", array_fill(0, $count, $placeholder));
     }
 
     public function isConfigured()

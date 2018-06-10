@@ -3,6 +3,7 @@
 namespace rain1\ConditionBuilder;
 
 
+use rain1\ConditionBuilder\Configuration\Configuration;
 use rain1\ConditionBuilder\Operator\OperatorInterface;
 
 class ConditionBuilder implements OperatorInterface
@@ -12,41 +13,50 @@ class ConditionBuilder implements OperatorInterface
     const MODE_OR = "OR";
 
     private $mode;
+    private $_conf;
 
     private $_isNot = false;
+
+    private $_resultsOnEmpty;
     /**
      * @var OperatorInterface[]
      */
     private $elements = [];
 
-    public function __construct($mode)
+    public function __construct($mode, Configuration $configuration = null)
     {
         $this->mode = $mode;
+        $this->_conf = $configuration ?: new Configuration();
+        $this->setResultOnEmpty($this->mode === self::MODE_AND? "TRUE" : "FALSE");
     }
 
-    public function append(OperatorInterface $element)
+    public function setResultOnEmpty(string $result)
     {
-        $args = func_get_args();
+        $this->_resultsOnEmpty = $result;
+    }
 
-        foreach ($args as $arg)
-            $this->elements[] = $arg;
+    public function append(OperatorInterface ... $elements): self
+    {
+
+        foreach ($elements as $element)
+            $this->elements[] = $element->setConfiguration($this->_conf);
 
         return $this;
     }
 
-    public function build():string
+    public function build(): string
     {
         $conditions = [];
         foreach ($this->elements as $element)
             if ($element->isConfigured())
                 $conditions[] = $element->build();
 
-        $not = $this->_isNot? "!" : "";
+        $not = $this->_isNot ? "!" : "";
 
-        return "$not(".(implode(" {$this->mode} ", $conditions) ?: $this->getEmptyConditionValue()) .")";
+        return "$not(" . (implode(" {$this->mode} ", $conditions) ?: $this->getEmptyConditionValue()) . ")";
     }
 
-    public function values():array
+    public function values(): array
     {
         $values = [];
         foreach ($this->elements as $element)
@@ -58,20 +68,22 @@ class ConditionBuilder implements OperatorInterface
 
     private function getEmptyConditionValue()
     {
-        return $this->mode === self::MODE_AND ? "TRUE" : "FALSE";
+        return $this->_resultsOnEmpty;
     }
 
-    private function _combine() {
+    private function _combine()
+    {
         $string = $this->build();
         $values = $this->values();
         $result = "";
         $count = 0;
-        for($i = 0; $i < strlen($string); $i++) {
-            if($string[$i] === "?") {
+        $placeholder = $this->_conf->getPlaceholder();
+        for ($i = 0; $i < strlen($string); $i++) {
+            if ($string[$i] === $placeholder) {
                 $result .= json_encode($values[$count]);
                 $count++;
-            }else{
-                $result.=$string[$i];
+            } else {
+                $result .= $string[$i];
             }
         }
         return $result;
@@ -83,9 +95,10 @@ class ConditionBuilder implements OperatorInterface
         return $this;
     }
 
-    public function configure($conf)
+    public function setConfiguration(Configuration $conf): OperatorInterface
     {
-
+        $this->_conf = $conf;
+        return $this;
     }
 
     public function isConfigured()

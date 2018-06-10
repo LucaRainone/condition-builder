@@ -4,6 +4,7 @@ namespace rain1\ConditionBuilder\test;
 
 use PHPUnit\Framework\TestCase;
 use rain1\ConditionBuilder\ConditionBuilder;
+use rain1\ConditionBuilder\Configuration\Configuration;
 use rain1\ConditionBuilder\Operator\OperatorInterface;
 
 class ConditionBuilderTest extends TestCase
@@ -74,6 +75,13 @@ class ConditionBuilderTest extends TestCase
         self::assertEquals($conditionBuilder->values(), [1, 2, 3]);
     }
 
+    public function testNot() {
+        $conditionBuilder = self::getInstanceModeAnd();
+        $conditionBuilder->append(new DummyOperator());
+        self::assertInstanceOf(ConditionBuilder::class, $conditionBuilder->not());
+        self::assertEquals("!(a DUMMY_OP b)",$conditionBuilder->build());
+    }
+
     private static function getInstanceModeAnd()
     {
         return new ConditionBuilder(ConditionBuilder::MODE_AND);
@@ -90,14 +98,18 @@ class DummyOperator implements OperatorInterface
 {
 
     protected $_isConfigured;
+    protected $_conf;
 
-    public function configure($conf)
-    {
-    }
 
-    public function __construct($isConfigured = true)
+    public function __construct($isConfigured = true, Configuration $conf = null)
     {
         $this->_isConfigured = $isConfigured;
+        $this->_conf = $conf?:new Configuration();
+    }
+
+    public function setConfiguration(Configuration $conf):OperatorInterface
+    {
+        return $this;
     }
 
     public function build(): String

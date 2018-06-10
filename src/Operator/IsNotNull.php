@@ -4,5 +4,5 @@ namespace rain1\ConditionBuilder\Operator;
 
 class IsNotNull extends IsNull
 {
-    protected $IsNot = true;
+    protected $isNot = true;
 }

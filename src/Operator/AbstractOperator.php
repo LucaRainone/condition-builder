@@ -24,7 +24,7 @@ abstract class AbstractOperator implements OperatorInterface
 
     public function build():String {
 
-        if(!$this->isConfigured())
+        if(!$this->mustBeConsidered())
             throw new Exception("Operator::build must be called only if at least one operator is set");
 
         return "";

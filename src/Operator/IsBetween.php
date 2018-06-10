@@ -59,7 +59,7 @@ class IsBetween extends AbstractOperator
         );
     }
 
-    public function isConfigured()
+    public function mustBeConsidered()
     {
         return !is_null($this->start) || !is_null($this->end);
     }

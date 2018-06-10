@@ -47,7 +47,7 @@ class IsEqual extends AbstractOperator
         return implode(",", array_fill(0, $count, $placeholder));
     }
 
-    public function isConfigured()
+    public function mustBeConsidered()
     {
         if(is_array($this->rightOperand))
             return !empty($this->rightOperand);

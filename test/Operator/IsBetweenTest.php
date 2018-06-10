@@ -15,7 +15,7 @@ class IsBetweenTest extends TestCase
         $isBetween = new IsBetween("a", 1, 2);
 
         self::assertEquals("a BETWEEN ? AND ?", $isBetween->build());
-        self::assertTrue($isBetween->isConfigured());
+        self::assertTrue($isBetween->mustBeConsidered());
         self::assertEquals([1, 2], $isBetween->values());
     }
 
@@ -25,7 +25,7 @@ class IsBetweenTest extends TestCase
         $isBetween = new IsBetween("a", "b", "c");
         $isBetween->not();
         self::assertEquals("a NOT BETWEEN ? AND ?", $isBetween->build());
-        self::assertTrue($isBetween->isConfigured());
+        self::assertTrue($isBetween->mustBeConsidered());
         self::assertEquals(["b", "c"], $isBetween->values());
     }
 
@@ -34,7 +34,7 @@ class IsBetweenTest extends TestCase
         $isBetween = new IsBetween("a", 1, null);
 
         self::assertEquals("a >= ?", $isBetween->build());
-        self::assertTrue($isBetween->isConfigured());
+        self::assertTrue($isBetween->mustBeConsidered());
         self::assertEquals([1], $isBetween->values());
     }
 
@@ -43,7 +43,7 @@ class IsBetweenTest extends TestCase
         $isBetween = new IsBetween("a", null, 2);
 
         self::assertEquals("a <= ?", $isBetween->build());
-        self::assertTrue($isBetween->isConfigured());
+        self::assertTrue($isBetween->mustBeConsidered());
         self::assertEquals([2], $isBetween->values());
     }
 
@@ -52,7 +52,7 @@ class IsBetweenTest extends TestCase
         $isBetween = new IsBetween("a", 1, null);
         $isBetween->not();
         self::assertEquals("a < ?", $isBetween->build());
-        self::assertTrue($isBetween->isConfigured());
+        self::assertTrue($isBetween->mustBeConsidered());
         self::assertEquals([1], $isBetween->values());
     }
 
@@ -61,7 +61,7 @@ class IsBetweenTest extends TestCase
         $isBetween = new IsBetween("a", null, 2);
         $isBetween->not();
         self::assertEquals("a > ?", $isBetween->build());
-        self::assertTrue($isBetween->isConfigured());
+        self::assertTrue($isBetween->mustBeConsidered());
         self::assertEquals([2], $isBetween->values());
     }
 

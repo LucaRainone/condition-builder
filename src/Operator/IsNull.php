@@ -6,12 +6,12 @@ class IsNull extends AbstractOperator
 {
 
     private $field;
-    private $_isConfigured;
+    private $_mustBeConsidered;
 
-    public function __construct($field, bool $condition = true)
+    public function __construct($field, bool $mustBeConsidered = true)
     {
         $this->field = $field;
-        $this->_isConfigured = $condition;
+        $this->_mustBeConsidered = $mustBeConsidered;
     }
 
     public function build(): String
@@ -29,8 +29,8 @@ class IsNull extends AbstractOperator
         return [];
     }
 
-    public function isConfigured()
+    public function mustBeConsidered()
     {
-        return $this->_isConfigured;
+        return $this->_mustBeConsidered;
     }
 }

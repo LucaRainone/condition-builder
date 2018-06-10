@@ -15,7 +15,7 @@ class IsLikeTest extends TestCase
        $isLike = new IsLike("a", "b");
 
        self::assertEquals("a LIKE ?", $isLike->build());
-       self::assertTrue($isLike->isConfigured());
+       self::assertTrue($isLike->mustBeConsidered());
        self::assertEquals(["b"], $isLike->values());
     }
 
@@ -24,7 +24,7 @@ class IsLikeTest extends TestCase
         $isLike = new IsLike("a","b");
         $isLike->not();
         self::assertEquals("a NOT LIKE ?", $isLike->build());
-        self::assertTrue($isLike->isConfigured());
+        self::assertTrue($isLike->mustBeConsidered());
         self::assertEquals(["b"], $isLike->values());
     }
 

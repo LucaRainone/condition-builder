@@ -15,7 +15,7 @@ class IsGreaterTest extends TestCase
        $isGreater = new IsGreater("a", "b");
 
        self::assertEquals("a > ?", $isGreater->build());
-       self::assertTrue($isGreater->isConfigured());
+       self::assertTrue($isGreater->mustBeConsidered());
        self::assertEquals(["b"], $isGreater->values());
     }
 
@@ -24,7 +24,7 @@ class IsGreaterTest extends TestCase
         $isGreater = new IsGreater("a","b");
         $isGreater->not();
         self::assertEquals("a <= ?", $isGreater->build());
-        self::assertTrue($isGreater->isConfigured());
+        self::assertTrue($isGreater->mustBeConsidered());
         self::assertEquals(["b"], $isGreater->values());
     }
 

@@ -25,7 +25,7 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
         return "{$this->leftOperand} {$this->operator} {$operand}";
     }
 
-    public function isConfigured()
+    public function mustBeConsidered()
     {
         return !is_null($this->rightOperand);
     }

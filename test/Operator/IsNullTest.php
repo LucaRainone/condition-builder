@@ -14,14 +14,18 @@ class IsNullTest extends TestCase
        $isNull = new IsNull("a");
 
        self::assertEquals("a IS NULL", $isNull->build());
-       self::assertTrue($isNull->isConfigured());
+       self::assertTrue($isNull->mustBeConsidered());
        self::assertEquals([], $isNull->values());
 
         $isNull = new IsNull("a", true);
 
         self::assertEquals("a IS NULL", $isNull->build());
-        self::assertTrue($isNull->isConfigured());
+        self::assertTrue($isNull->mustBeConsidered());
         self::assertEquals([], $isNull->values());
+
+        $isNull = new IsNull("a", false);
+
+        self::assertFalse($isNull->mustBeConsidered());
     }
 
 
@@ -29,7 +33,7 @@ class IsNullTest extends TestCase
         $isNull = new IsNull("a");
         $isNull->not();
         self::assertEquals("a IS NOT NULL", $isNull->build());
-        self::assertTrue($isNull->isConfigured());
+        self::assertTrue($isNull->mustBeConsidered());
         self::assertEquals([], $isNull->values());
     }
 

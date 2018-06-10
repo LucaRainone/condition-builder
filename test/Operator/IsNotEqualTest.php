@@ -15,7 +15,7 @@ class IsNotEqualTest extends TestCase
        $isNotEqual = new IsNotEqual("a", "b");
 
        self::assertEquals("a != ?", $isNotEqual->build());
-       self::assertTrue($isNotEqual->isConfigured());
+       self::assertTrue($isNotEqual->mustBeConsidered());
        self::assertEquals(["b"], $isNotEqual->values());
     }
 
@@ -31,7 +31,7 @@ class IsNotEqualTest extends TestCase
         $isNotEqual = new IsNotEqual("a","b");
         $isNotEqual->not();
         self::assertEquals("a = ?", $isNotEqual->build());
-        self::assertTrue($isNotEqual->isConfigured());
+        self::assertTrue($isNotEqual->mustBeConsidered());
         self::assertEquals(["b"], $isNotEqual->values());
     }
 
@@ -39,7 +39,7 @@ class IsNotEqualTest extends TestCase
         $isNotEqual = new IsNotEqual("a",[1,2,3]);
         $isNotEqual->not();
         self::assertEquals("a IN (?,?,?)", $isNotEqual->build());
-        self::assertTrue($isNotEqual->isConfigured());
+        self::assertTrue($isNotEqual->mustBeConsidered());
         self::assertEquals([1,2,3], $isNotEqual->values());
     }
 

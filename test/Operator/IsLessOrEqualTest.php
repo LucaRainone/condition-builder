@@ -15,7 +15,7 @@ class IsLessOrEqualTest extends TestCase
        $isLessOrEqual = new IsLessOrEqual("a", "b");
 
        self::assertEquals("a <= ?", $isLessOrEqual->build());
-       self::assertTrue($isLessOrEqual->isConfigured());
+       self::assertTrue($isLessOrEqual->mustBeConsidered());
        self::assertEquals(["b"], $isLessOrEqual->values());
     }
 
@@ -24,7 +24,7 @@ class IsLessOrEqualTest extends TestCase
         $isLessOrEqual = new IsLessOrEqual("a","b");
         $isLessOrEqual->not();
         self::assertEquals("a > ?", $isLessOrEqual->build());
-        self::assertTrue($isLessOrEqual->isConfigured());
+        self::assertTrue($isLessOrEqual->mustBeConsidered());
         self::assertEquals(["b"], $isLessOrEqual->values());
     }
 

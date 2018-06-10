@@ -15,7 +15,7 @@ class IsNotLikeTest extends TestCase
        $isNotLike = new IsNotLike("a", "b");
 
        self::assertEquals("a NOT LIKE ?", $isNotLike->build());
-       self::assertTrue($isNotLike->isConfigured());
+       self::assertTrue($isNotLike->mustBeConsidered());
        self::assertEquals(["b"], $isNotLike->values());
     }
 
@@ -24,7 +24,7 @@ class IsNotLikeTest extends TestCase
         $isNotLike = new IsNotLike("a","b");
         $isNotLike->not();
         self::assertEquals("a LIKE ?", $isNotLike->build());
-        self::assertTrue($isNotLike->isConfigured());
+        self::assertTrue($isNotLike->mustBeConsidered());
         self::assertEquals(["b"], $isNotLike->values());
     }
 

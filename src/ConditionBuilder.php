@@ -48,7 +48,7 @@ class ConditionBuilder implements OperatorInterface
     {
         $conditions = [];
         foreach ($this->elements as $element)
-            if ($element->isConfigured())
+            if ($element->mustBeConsidered())
                 $conditions[] = $element->build();
 
         $not = $this->_isNot ? "!" : "";
@@ -60,7 +60,7 @@ class ConditionBuilder implements OperatorInterface
     {
         $values = [];
         foreach ($this->elements as $element)
-            if ($element->isConfigured())
+            if ($element->mustBeConsidered())
                 $values = array_merge($values, $element->values());
 
         return $values;
@@ -101,7 +101,7 @@ class ConditionBuilder implements OperatorInterface
         return $this;
     }
 
-    public function isConfigured()
+    public function mustBeConsidered()
     {
         return true;
     }

@@ -11,5 +11,5 @@ interface OperatorInterface
     public function values():array;
     public function not();
     public function setConfiguration(Configuration $conf):OperatorInterface;
-    public function isConfigured();
+    public function mustBeConsidered();
 }

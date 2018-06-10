@@ -97,13 +97,13 @@ class ConditionBuilderTest extends TestCase
 class DummyOperator implements OperatorInterface
 {
 
-    protected $_isConfigured;
+    protected $_mustBeConsidered;
     protected $_conf;
 
 
-    public function __construct($isConfigured = true, Configuration $conf = null)
+    public function __construct($mustBeConsidered = true, Configuration $conf = null)
     {
-        $this->_isConfigured = $isConfigured;
+        $this->_mustBeConsidered = $mustBeConsidered;
         $this->_conf = $conf?:new Configuration();
     }
 
@@ -127,9 +127,9 @@ class DummyOperator implements OperatorInterface
 
     }
 
-    public function isConfigured()
+    public function mustBeConsidered()
     {
-        return $this->_isConfigured;
+        return $this->_mustBeConsidered;
     }
 
 }

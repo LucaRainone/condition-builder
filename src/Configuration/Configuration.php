@@ -2,7 +2,7 @@
 
 namespace rain1\ConditionBuilder\Configuration;
 
-class Configuration {
+class Configuration implements ConfigurationInterface {
     
     private $_placeholder = "?";
 

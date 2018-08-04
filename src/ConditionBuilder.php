@@ -4,6 +4,7 @@ namespace rain1\ConditionBuilder;
 
 
 use rain1\ConditionBuilder\Configuration\Configuration;
+use rain1\ConditionBuilder\Configuration\ConfigurationInterface;
 use rain1\ConditionBuilder\Operator\OperatorInterface;
 
 class ConditionBuilder implements OperatorInterface
@@ -17,20 +18,27 @@ class ConditionBuilder implements OperatorInterface
 
     private $_isNot = false;
 
-    private $_resultsOnEmpty;
+	private        $_resultsOnEmpty;
+	private static $_defaultConfiguration;
     /**
      * @var OperatorInterface[]
      */
     private $elements = [];
 
-    public function __construct($mode, Configuration $configuration = null)
+	public static function setDefaultConfiguration(ConfigurationInterface $configuration)
+	{
+		self::$_defaultConfiguration = $configuration;
+	}
+
+	public function __construct($mode)
     {
-        $this->mode = $mode;
-        $this->_conf = $configuration ?: new Configuration();
+	    $this->mode  = $mode;
+	    $this->_conf = self::$_defaultConfiguration ?: new Configuration();
         $this->setResultOnEmpty($this->mode === self::MODE_AND? "TRUE" : "FALSE");
     }
 
-    public function setResultOnEmpty(string $result)
+
+	public function setResultOnEmpty(string $result)
     {
         $this->_resultsOnEmpty = $result;
     }
@@ -76,15 +84,11 @@ class ConditionBuilder implements OperatorInterface
         $string = $this->build();
         $values = $this->values();
         $result = "";
-        $count = 0;
         $placeholder = $this->_conf->getPlaceholder();
-        for ($i = 0; $i < strlen($string); $i++) {
-            if ($string[$i] === $placeholder) {
-                $result .= json_encode($values[$count]);
-                $count++;
-            } else {
-                $result .= $string[$i];
-            }
+
+        $parts = explode($placeholder, $string);
+        for($i = 0; $i < count($parts); $i++) {
+	        $result .= $parts[$i] . (array_key_exists($i,$values)? json_encode($values[$i]) : "");
         }
         return $result;
     }
@@ -95,7 +99,7 @@ class ConditionBuilder implements OperatorInterface
         return $this;
     }
 
-    public function setConfiguration(Configuration $conf): OperatorInterface
+	public function setConfiguration(ConfigurationInterface $conf): OperatorInterface
     {
         $this->_conf = $conf;
         return $this;

@@ -4,6 +4,7 @@ namespace rain1\ConditionBuilder\Operator;
 
 
 use rain1\ConditionBuilder\Configuration\Configuration;
+use rain1\ConditionBuilder\Configuration\ConfigurationInterface;
 use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
 abstract class AbstractOperator implements OperatorInterface
@@ -17,11 +18,15 @@ abstract class AbstractOperator implements OperatorInterface
         return $this;
     }
 
-    public function setConfiguration(Configuration $configuration):OperatorInterface {
+    public function setConfiguration(ConfigurationInterface $configuration):OperatorInterface {
         $this->_conf = $configuration;
         return $this;
     }
 
+	/**
+	 * @return String
+	 * @throws Exception
+	 */
     public function build():String {
 
         if(!$this->mustBeConsidered())

@@ -2,14 +2,13 @@ language: php
 sudo: false
 php:
   - '7.0'
-  - nightly
 
 before_install:
   - composer self-update
   - composer install
 
 script:
-  - vendor\bin\phpunit --configuration phpunit.dist.xml --coverage-clover=builds/coverage/clover.xml test
+  - vendor/bin/phpunit --configuration phpunit.dist.xml --coverage-clover=builds/coverage/clover.xml test
 
 after_script:
   - php vendor/bin/coveralls -v

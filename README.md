@@ -7,7 +7,7 @@ This is not an ORM or abstraction layers: it's a condition builder.
 
 ## Usage
 
-```
+```php
 <?php
 
 require_once "vendor/autoload.php";

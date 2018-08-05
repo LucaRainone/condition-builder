@@ -1,4 +1,5 @@
-# ConditionBuilder
+[![Build Status](https://travis-ci.org/LucaRainone/conditionbuilder.svg?branch=master)](https://travis-ci.org/LucaRainone/conditionbuilder)
+
 
 This package allows you to build query conditions for PDO-like interfaces.
 

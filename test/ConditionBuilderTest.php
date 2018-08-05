@@ -5,6 +5,7 @@ namespace rain1\ConditionBuilder\test;
 use PHPUnit\Framework\TestCase;
 use rain1\ConditionBuilder\ConditionBuilder;
 use rain1\ConditionBuilder\Configuration\Configuration;
+use rain1\ConditionBuilder\Configuration\ConfigurationInterface;
 use rain1\ConditionBuilder\Operator\OperatorInterface;
 
 class ConditionBuilderTest extends TestCase
@@ -107,7 +108,7 @@ class DummyOperator implements OperatorInterface
         $this->_conf = $conf?:new Configuration();
     }
 
-    public function setConfiguration(Configuration $conf):OperatorInterface
+    public function setConfiguration(ConfigurationInterface $conf):OperatorInterface
     {
         return $this;
     }

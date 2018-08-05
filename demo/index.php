@@ -7,7 +7,7 @@ use rain1\ConditionBuilder\Expression\MySQL\Date\Date;
 use rain1\ConditionBuilder\Operator\IsBetween;
 use rain1\ConditionBuilder\Operator\IsEqual;
 
-require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../autoload.php';
 
 function buildQueryFilterUser($filters) {
 

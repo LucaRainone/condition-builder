@@ -31,6 +31,10 @@ class IsEqual extends AbstractOperator
     }
 
     private function _buildInOperatorCondition(string $left, array $right, string $placeholder) {
+
+    	if(empty($right))
+    		return "FALSE";
+
         $operator = $this->isNot ? "NOT IN" : "IN";
         return "$left $operator (" .
             $this->_commaSeparatedPlaceholder(count($right), $placeholder) .
@@ -49,9 +53,6 @@ class IsEqual extends AbstractOperator
 
     public function mustBeConsidered()
     {
-        if(is_array($this->rightOperand))
-            return !empty($this->rightOperand);
-
         return !is_null($this->rightOperand);
     }
 

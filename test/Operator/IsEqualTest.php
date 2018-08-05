@@ -26,6 +26,12 @@ class IsEqualTest extends TestCase
         self::assertEquals([1,2,3], $isEqual->values());
     }
 
+    public function testInEmptyArray() {
+	    $isEqual = new IsEqual("a", []);
+
+	    self::assertEquals("FALSE", $isEqual->build());
+//	    self::assertEquals([], $isEqual->values());
+    }
 
     public function testNot() {
         $isEqual = new IsEqual("a","b");
@@ -46,12 +52,6 @@ class IsEqualTest extends TestCase
     public function testNotConfigured() {
         $this->expectException(Exception::class);
         $isEqual = new IsEqual("a",null);
-        $isEqual->build();
-    }
-
-    public function testNotConfiguredArray() {
-        $this->expectException(Exception::class);
-        $isEqual = new IsEqual("a",[]);
         $isEqual->build();
     }
 

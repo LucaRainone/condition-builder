@@ -44,8 +44,7 @@ class IsBetween extends AbstractOperator
         else if (is_null($this->start)) {
             $operator = $this->isNot ? ">" : "<=";
             $operand = $this->fetchPlaceholderOrExpressionString($this->end);
-        } else
-            throw new Exception("all operators are null");
+        }
 
         return "{$this->field} $operator {$operand}";
     }

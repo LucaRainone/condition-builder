@@ -29,7 +29,7 @@ class DateAdd implements ExpressionInterface
 
     public function __toString()
     {
-        return "DATE_ADD({$this->date}, INTERVAL {$this->adding} {$this->unit})";
+        return "DATE_ADD(\"{$this->date}\", INTERVAL {$this->adding} {$this->unit})";
     }
 
 }

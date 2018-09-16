@@ -1,5 +1,5 @@
 {
-  "name" : "rain1/ConditionBuilder",
+  "name" : "rain1/condition-builder",
   "type": "library",
   "description": "Condition Builder for logical expressions",
   "keywords" : ["MySQL", "SQL", "condition", "logical", "expression", "PDO", "database", "db"],

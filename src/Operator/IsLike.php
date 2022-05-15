@@ -6,7 +6,7 @@ class IsLike extends AbstractLeftRightOperator
 {
     protected string $operator = "LIKE";
 
-    public function build(): String
+    public function build(): string
     {
         $this->operator = $this->isNot ? "NOT LIKE" : "LIKE";
         return parent::build();

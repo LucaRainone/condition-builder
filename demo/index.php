@@ -9,7 +9,7 @@ use rain1\ConditionBuilder\Operator\IsEqual;
 
 require __DIR__ . '/../autoload.php';
 
-function buildQueryFilterUser($filters)
+function buildQueryFilterUser($filters) : array
 {
     $defaults = [
         'id'                     => null,

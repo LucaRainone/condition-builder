@@ -6,8 +6,17 @@ use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
 class IsBetween extends AbstractOperator
 {
+    /**
+     * @var mixed
+     */
     private $field;
+    /**
+     * @var mixed
+     */
     private $start;
+    /**
+     * @var mixed
+     */
     private $end;
 
     public function __construct($field, $start, $end)
@@ -24,7 +33,7 @@ class IsBetween extends AbstractOperator
         return !is_null($this->start) && !is_null($this->end) ? $this->_buildFull() : $this->_buildWithOneLimit();
     }
 
-    private function _buildFull()
+    private function _buildFull(): string
     {
         $operator = $this->isNot ? "NOT BETWEEN" : "BETWEEN";
 
@@ -34,7 +43,7 @@ class IsBetween extends AbstractOperator
         return "{$this->field} $operator {$firstCustomOperand} AND {$secondCustomOperand}";
     }
 
-    private function _buildWithOneLimit()
+    private function _buildWithOneLimit(): string
     {
         if (is_null($this->end)) {
             $operator = $this->isNot ? "<" : ">=";

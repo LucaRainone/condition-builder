@@ -25,8 +25,8 @@ class ConditionBuilderTest extends TestCase
 
         $conditionBuilder->append(new DummyOperator(true));
 
-        self::assertEquals($conditionBuilder->build(), "(a DUMMY_OP b ? ? ?)");
-        self::assertEquals($conditionBuilder->values(), [1, 2, 3]);
+        self::assertEquals("(a DUMMY_OP b ? ? ?)", $conditionBuilder->build());
+        self::assertEquals([1, 2, 3], $conditionBuilder->values());
     }
 
     public function testDummyOperatorConcatAND()
@@ -37,8 +37,8 @@ class ConditionBuilderTest extends TestCase
             ->append(new DummyOperator(true))
             ->append(new DummyOperator(true));
 
-        self::assertEquals($conditionBuilder->build(), "(a DUMMY_OP b ? ? ? AND a DUMMY_OP b ? ? ?)");
-        self::assertEquals($conditionBuilder->values(), [1, 2, 3, 1, 2, 3]);
+        self::assertEquals("(a DUMMY_OP b ? ? ? AND a DUMMY_OP b ? ? ?)", $conditionBuilder->build());
+        self::assertEquals([1, 2, 3, 1, 2, 3], $conditionBuilder->values());
     }
 
     public function testDummyOperatorConcatOR()
@@ -49,8 +49,8 @@ class ConditionBuilderTest extends TestCase
             ->append(new DummyOperator(true))
             ->append(new DummyOperator(true));
 
-        self::assertEquals($conditionBuilder->build(), "(a DUMMY_OP b ? ? ? OR a DUMMY_OP b ? ? ?)");
-        self::assertEquals($conditionBuilder->values(), [1, 2, 3, 1, 2, 3]);
+        self::assertEquals("(a DUMMY_OP b ? ? ? OR a DUMMY_OP b ? ? ?)", $conditionBuilder->build());
+        self::assertEquals([1, 2, 3, 1, 2, 3], $conditionBuilder->values());
     }
 
     public function testMultipleArgumentAppend()
@@ -60,8 +60,8 @@ class ConditionBuilderTest extends TestCase
         $conditionBuilder
             ->append(new DummyOperator(true), new DummyOperator(true));
 
-        self::assertEquals($conditionBuilder->build(), "(a DUMMY_OP b ? ? ? AND a DUMMY_OP b ? ? ?)");
-        self::assertEquals($conditionBuilder->values(), [1, 2, 3, 1, 2, 3]);
+        self::assertEquals("(a DUMMY_OP b ? ? ? AND a DUMMY_OP b ? ? ?)", $conditionBuilder->build());
+        self::assertEquals([1, 2, 3, 1, 2, 3], $conditionBuilder->values());
     }
 
     public function testIgnoreNotConfiguredOperator()
@@ -71,8 +71,8 @@ class ConditionBuilderTest extends TestCase
         $conditionBuilder
             ->append(new DummyOperator(true), new DummyOperator(false));
 
-        self::assertEquals($conditionBuilder->build(), "(a DUMMY_OP b ? ? ?)");
-        self::assertEquals($conditionBuilder->values(), [1, 2, 3]);
+        self::assertEquals("(a DUMMY_OP b ? ? ?)", $conditionBuilder->build());
+        self::assertEquals([1, 2, 3], $conditionBuilder->values());
     }
 
     public function testNot()
@@ -86,7 +86,7 @@ class ConditionBuilderTest extends TestCase
     public function testToStringMagicMethod()
     {
         $conditionBuilder = self::getInstanceModeAnd();
-        self::assertEquals("$conditionBuilder", "(TRUE)");
+        self::assertEquals("(TRUE)", "$conditionBuilder");
     }
 
     public function testInvokeMagicMethod()
@@ -129,12 +129,12 @@ class ConditionBuilderTest extends TestCase
         self::assertEquals("(a DUMMY_OP b 1 2 3)", $debug['desired']);
     }
 
-    private static function getInstanceModeAnd()
+    private static function getInstanceModeAnd(): ConditionBuilder
     {
         return new ConditionBuilder(ConditionBuilder::MODE_AND);
     }
 
-    private static function getInstanceModeOr()
+    private static function getInstanceModeOr(): ConditionBuilder
     {
         return new ConditionBuilder(ConditionBuilder::MODE_OR);
     }
@@ -143,18 +143,18 @@ class ConditionBuilderTest extends TestCase
 class DummyOperator implements OperatorInterface
 {
     protected $_mustBeConsidered;
-    protected $_conf;
+    protected ?ConfigurationInterface $_configuration;
 
 
     public function __construct($mustBeConsidered = true, Configuration $conf = null)
     {
         $this->_mustBeConsidered = $mustBeConsidered;
-        $this->_conf = $conf ?: new Configuration();
+        $this->_configuration    = $conf ?: new Configuration();
     }
 
-    public function setConfiguration(ConfigurationInterface $conf): OperatorInterface
+    public function setConfiguration(ConfigurationInterface $configuration): OperatorInterface
     {
-        $this->_conf = $conf;
+        $this->_configuration = $configuration;
         return $this;
     }
 
@@ -168,17 +168,18 @@ class DummyOperator implements OperatorInterface
         return [1, 2, 3];
     }
 
-    public function not()
+    public function not(): OperatorInterface
     {
+        return $this;
     }
 
-    public function mustBeConsidered()
+    public function mustBeConsidered(): bool
     {
         return $this->_mustBeConsidered;
     }
 
     public function getConfiguration()
     {
-        return $this->_conf;
+        return $this->_configuration;
     }
 }

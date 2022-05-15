@@ -8,7 +8,7 @@ interface OperatorInterface
 {
     public function build(): String;
     public function values(): array;
-    public function not();
-    public function setConfiguration(ConfigurationInterface $conf): OperatorInterface;
-    public function mustBeConsidered();
+    public function not(): OperatorInterface;
+    public function setConfiguration(ConfigurationInterface $configuration): OperatorInterface;
+    public function mustBeConsidered(): bool;
 }

@@ -4,7 +4,7 @@ namespace rain1\ConditionBuilder\Operator;
 
 class IsLike extends AbstractLeftRightOperator
 {
-    protected $operator = "LIKE";
+    protected string $operator = "LIKE";
 
     public function build(): String
     {

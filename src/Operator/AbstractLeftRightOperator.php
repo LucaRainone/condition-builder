@@ -6,9 +6,18 @@ use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
 abstract class AbstractLeftRightOperator extends AbstractOperator
 {
+    /**
+     * @var mixed
+     */
     protected $leftOperand;
+    /**
+     * @var mixed
+     */
     protected $rightOperand;
-    protected $operator;
+    /**
+     * @var mixed
+     */
+    protected string $operator;
 
     public function __construct($left, $right)
     {
@@ -25,7 +34,7 @@ abstract class AbstractLeftRightOperator extends AbstractOperator
         return "{$this->leftOperand} {$this->operator} {$operand}";
     }
 
-    public function mustBeConsidered()
+    public function mustBeConsidered(): bool
     {
         return !is_null($this->rightOperand);
     }

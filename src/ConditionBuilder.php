@@ -11,17 +11,17 @@ class ConditionBuilder implements OperatorInterface
     public const MODE_AND = "AND";
     public const MODE_OR = "OR";
 
-    private $mode;
-    private $_conf;
+    private string $mode;
+    private ConfigurationInterface $_conf;
 
-    private $_isNot = false;
+    private bool $_isNot = false;
 
-    private $_resultsOnEmpty;
-    private static $_defaultConfiguration;
+    private string $_resultsOnEmpty;
+    private static ?ConfigurationInterface $_defaultConfiguration = null;
     /**
      * @var OperatorInterface[]
      */
-    private $elements = [];
+    private array $elements = [];
 
     public static function setDefaultConfiguration(ConfigurationInterface $configuration)
     {
@@ -36,7 +36,7 @@ class ConditionBuilder implements OperatorInterface
     }
 
 
-    public function setResultOnEmpty(string $result)
+    public function setResultOnEmpty(string $result): void
     {
         $this->_resultsOnEmpty = $result;
     }
@@ -76,12 +76,12 @@ class ConditionBuilder implements OperatorInterface
         return $values;
     }
 
-    private function getEmptyConditionValue()
+    private function getEmptyConditionValue(): string
     {
         return $this->_resultsOnEmpty;
     }
 
-    private function _combine()
+    private function _combine(): string
     {
         $string = $this->build();
         $values = $this->values();
@@ -95,19 +95,19 @@ class ConditionBuilder implements OperatorInterface
         return $result;
     }
 
-    public function not()
+    public function not(): OperatorInterface
     {
         $this->_isNot = !$this->_isNot;
         return $this;
     }
 
-    public function setConfiguration(ConfigurationInterface $conf): OperatorInterface
+    public function setConfiguration(ConfigurationInterface $configuration): OperatorInterface
     {
-        $this->_conf = $conf;
+        $this->_conf = $configuration;
         return $this;
     }
 
-    public function mustBeConsidered()
+    public function mustBeConsidered(): bool
     {
         return true;
     }
@@ -117,12 +117,12 @@ class ConditionBuilder implements OperatorInterface
         return $this->build();
     }
 
-    public function __invoke()
+    public function __invoke(): array
     {
         return $this->values();
     }
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [
             'condition' => $this->build(),

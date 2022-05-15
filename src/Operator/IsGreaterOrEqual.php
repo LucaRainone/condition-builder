@@ -4,7 +4,7 @@ namespace rain1\ConditionBuilder\Operator;
 
 class IsGreaterOrEqual extends AbstractLeftRightOperator
 {
-    protected $operator = ">=";
+    protected string $operator = ">=";
 
     public function build(): String
     {

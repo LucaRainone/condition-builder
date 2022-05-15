@@ -27,6 +27,9 @@ class DateAdd implements ExpressionInterface
 
     public function __toString()
     {
+        /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
+        /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
+        /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
         return "DATE_ADD(\"{$this->date}\", INTERVAL {$this->adding} {$this->unit})";
     }
 }

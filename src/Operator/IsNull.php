@@ -4,8 +4,8 @@ namespace rain1\ConditionBuilder\Operator;
 
 class IsNull extends AbstractOperator
 {
-    private $field;
-    private $_mustBeConsidered;
+    private string $field;
+    private bool $_mustBeConsidered;
 
     public function __construct($field, bool $mustBeConsidered = true)
     {
@@ -27,7 +27,7 @@ class IsNull extends AbstractOperator
         return [];
     }
 
-    public function mustBeConsidered()
+    public function mustBeConsidered(): bool
     {
         return $this->_mustBeConsidered;
     }

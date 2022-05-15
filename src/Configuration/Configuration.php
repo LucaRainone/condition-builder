@@ -4,7 +4,7 @@ namespace rain1\ConditionBuilder\Configuration;
 
 class Configuration implements ConfigurationInterface
 {
-    private $_placeholder = "?";
+    private string $_placeholder = "?";
 
     public function getPlaceholder(): string
     {

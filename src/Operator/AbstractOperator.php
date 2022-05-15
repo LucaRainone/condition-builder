@@ -8,10 +8,10 @@ use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
 abstract class AbstractOperator implements OperatorInterface
 {
-    protected $isNot = false;
-    protected $_conf;
+    protected bool                    $isNot          = false;
+    protected ?ConfigurationInterface $_configuration = null;
 
-    public function not()
+    public function not(): OperatorInterface
     {
         $this->isNot = !$this->isNot;
         return $this;
@@ -19,7 +19,7 @@ abstract class AbstractOperator implements OperatorInterface
 
     public function setConfiguration(ConfigurationInterface $configuration): OperatorInterface
     {
-        $this->_conf = $configuration;
+        $this->_configuration = $configuration;
         return $this;
     }
 
@@ -36,16 +36,16 @@ abstract class AbstractOperator implements OperatorInterface
         return "";
     }
 
-    protected function fetchPlaceholderOrExpressionString($value)
+    protected function fetchPlaceholderOrExpressionString($value): string
     {
         return $value instanceof ExpressionInterface ? $value->__toString() : $this->getConfiguration()->getPlaceholder();
     }
 
     protected function getConfiguration(): Configuration
     {
-        if (!$this->_conf) {
-            $this->_conf = new Configuration();
+        if (!$this->_configuration) {
+            $this->_configuration = new Configuration();
         }
-        return $this->_conf;
+        return $this->_configuration;
     }
 }

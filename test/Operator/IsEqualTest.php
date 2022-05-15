@@ -9,56 +9,60 @@ use rain1\ConditionBuilder\Operator\IsEqual;
 
 class IsEqualTest extends TestCase
 {
-
     public function testConstructor()
     {
-       $isEqual = new IsEqual("a", "b");
+        $isEqual = new IsEqual("a", "b");
 
-       self::assertEquals("a = ?", $isEqual->build());
-       self::assertTrue($isEqual->mustBeConsidered());
-       self::assertEquals(["b"], $isEqual->values());
+        self::assertEquals("a = ?", $isEqual->build());
+        self::assertTrue($isEqual->mustBeConsidered());
+        self::assertEquals(["b"], $isEqual->values());
     }
 
-    public function testRightOperandArray() {
+    public function testRightOperandArray()
+    {
         $isEqual = new IsEqual("a", [1,2,3]);
 
         self::assertEquals("a IN (?,?,?)", $isEqual->build());
         self::assertEquals([1,2,3], $isEqual->values());
     }
 
-    public function testInEmptyArray() {
-	    $isEqual = new IsEqual("a", []);
+    public function testInEmptyArray()
+    {
+        $isEqual = new IsEqual("a", []);
 
-	    self::assertEquals("FALSE", $isEqual->build());
-//	    self::assertEquals([], $isEqual->values());
+        self::assertEquals("FALSE", $isEqual->build());
+        //	    self::assertEquals([], $isEqual->values());
     }
 
-    public function testNot() {
-        $isEqual = new IsEqual("a","b");
+    public function testNot()
+    {
+        $isEqual = new IsEqual("a", "b");
         $isEqual->not();
         self::assertEquals("a != ?", $isEqual->build());
         self::assertTrue($isEqual->mustBeConsidered());
         self::assertEquals(["b"], $isEqual->values());
     }
 
-    public function testNotIn() {
-        $isEqual = new IsEqual("a",[1,2,3]);
+    public function testNotIn()
+    {
+        $isEqual = new IsEqual("a", [1,2,3]);
         $isEqual->not();
         self::assertEquals("a NOT IN (?,?,?)", $isEqual->build());
         self::assertTrue($isEqual->mustBeConsidered());
         self::assertEquals([1,2,3], $isEqual->values());
     }
 
-    public function testNotConfigured() {
+    public function testNotConfigured()
+    {
         $this->expectException(Exception::class);
-        $isEqual = new IsEqual("a",null);
+        $isEqual = new IsEqual("a", null);
         $isEqual->build();
     }
 
-    public function testExpression() {
+    public function testExpression()
+    {
         $isEqual = new IsEqual("a", new Expression("NOW()"));
         self::assertEquals("a = NOW()", $isEqual->build());
         self::assertEquals([], $isEqual->values());
     }
-
 }

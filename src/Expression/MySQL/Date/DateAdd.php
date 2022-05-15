@@ -6,14 +6,12 @@ use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
 class DateAdd implements ExpressionInterface
 {
-
-
-    const UNIT_SECOND = "SECOND";
-    const UNIT_MINUTE = "MINUTE";
-    const UNIT_HOUR = "HOUR";
-    const UNIT_DAY = "DAY";
-    const UNIT_MONTH = "MONTH";
-    const UNIT_YEAR = "YEAR";
+    public const UNIT_SECOND = "SECOND";
+    public const UNIT_MINUTE = "MINUTE";
+    public const UNIT_HOUR = "HOUR";
+    public const UNIT_DAY = "DAY";
+    public const UNIT_MONTH = "MONTH";
+    public const UNIT_YEAR = "YEAR";
 
 
     private $date;
@@ -31,5 +29,4 @@ class DateAdd implements ExpressionInterface
     {
         return "DATE_ADD(\"{$this->date}\", INTERVAL {$this->adding} {$this->unit})";
     }
-
 }

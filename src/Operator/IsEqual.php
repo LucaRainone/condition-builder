@@ -15,9 +15,8 @@ class IsEqual extends AbstractOperator
         $this->rightOperand = $rightOperand;
     }
 
-    public function build():String
+    public function build(): String
     {
-
         parent::build();
 
         $placeholder = $this->getConfiguration()->getPlaceholder();
@@ -30,10 +29,11 @@ class IsEqual extends AbstractOperator
         return $condition;
     }
 
-    private function _buildInOperatorCondition(string $left, array $right, string $placeholder) {
-
-    	if(empty($right))
-    		return "FALSE";
+    private function _buildInOperatorCondition(string $left, array $right, string $placeholder)
+    {
+        if (empty($right)) {
+            return "FALSE";
+        }
 
         $operator = $this->isNot ? "NOT IN" : "IN";
         return "$left $operator (" .
@@ -41,13 +41,15 @@ class IsEqual extends AbstractOperator
             ")";
     }
 
-    private function _buildEqualOperatorCondition(string $left, $right, string $placeholder) {
+    private function _buildEqualOperatorCondition(string $left, $right, string $placeholder)
+    {
         $operator = $this->isNot ? "!=" : "=";
-        $right = $right instanceof ExpressionInterface? $right->__toString() : $placeholder;
+        $right = $right instanceof ExpressionInterface ? $right->__toString() : $placeholder;
         return "$left $operator $right";
     }
 
-    private function _commaSeparatedPlaceholder(int $count, string $placeholder):string {
+    private function _commaSeparatedPlaceholder(int $count, string $placeholder): string
+    {
         return implode(",", array_fill(0, $count, $placeholder));
     }
 
@@ -56,13 +58,12 @@ class IsEqual extends AbstractOperator
         return !is_null($this->rightOperand);
     }
 
-    public function values():array
+    public function values(): array
     {
-
-        if($this->rightOperand instanceof ExpressionInterface)
+        if ($this->rightOperand instanceof ExpressionInterface) {
             return [];
+        }
 
         return is_array($this->rightOperand) ? $this->rightOperand : [$this->rightOperand];
-
     }
 }

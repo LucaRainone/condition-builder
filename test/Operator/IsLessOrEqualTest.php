@@ -9,32 +9,34 @@ use rain1\ConditionBuilder\Operator\IsLessOrEqual;
 
 class IsLessOrEqualTest extends TestCase
 {
-
     public function testConstructor()
     {
-       $isLessOrEqual = new IsLessOrEqual("a", "b");
+        $isLessOrEqual = new IsLessOrEqual("a", "b");
 
-       self::assertEquals("a <= ?", $isLessOrEqual->build());
-       self::assertTrue($isLessOrEqual->mustBeConsidered());
-       self::assertEquals(["b"], $isLessOrEqual->values());
+        self::assertEquals("a <= ?", $isLessOrEqual->build());
+        self::assertTrue($isLessOrEqual->mustBeConsidered());
+        self::assertEquals(["b"], $isLessOrEqual->values());
     }
 
 
-    public function testNot() {
-        $isLessOrEqual = new IsLessOrEqual("a","b");
+    public function testNot()
+    {
+        $isLessOrEqual = new IsLessOrEqual("a", "b");
         $isLessOrEqual->not();
         self::assertEquals("a > ?", $isLessOrEqual->build());
         self::assertTrue($isLessOrEqual->mustBeConsidered());
         self::assertEquals(["b"], $isLessOrEqual->values());
     }
 
-    public function testNotConfigured() {
+    public function testNotConfigured()
+    {
         $this->expectException(Exception::class);
-        $isLessOrEqual = new IsLessOrEqual("a",null);
+        $isLessOrEqual = new IsLessOrEqual("a", null);
         $isLessOrEqual->build();
     }
 
-    public function testExpression() {
+    public function testExpression()
+    {
         $isLessOrEqual = new IsLessOrEqual("a", new Expression("NOW()"));
         self::assertEquals("a <= NOW()", $isLessOrEqual->build());
         self::assertEquals([], $isLessOrEqual->values());

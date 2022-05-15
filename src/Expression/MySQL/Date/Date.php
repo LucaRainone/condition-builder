@@ -7,7 +7,6 @@ use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
 class Date implements ExpressionInterface
 {
-
     private $date;
 
     public static function now()
@@ -27,8 +26,6 @@ class Date implements ExpressionInterface
 
     private function _unixTimestamp($date)
     {
-        return is_int($date) ? $date : ($date instanceof Expression? $date : strtotime($date));
+        return is_int($date) ? $date : ($date instanceof Expression ? $date : strtotime($date));
     }
-
-
 }

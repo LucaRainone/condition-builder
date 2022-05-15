@@ -4,8 +4,8 @@ namespace rain1\ConditionBuilder\Operator;
 
 use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
-abstract class AbstractLeftRightOperator extends AbstractOperator {
-
+abstract class AbstractLeftRightOperator extends AbstractOperator
+{
     protected $leftOperand;
     protected $rightOperand;
     protected $operator;
@@ -16,7 +16,7 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
         $this->rightOperand = $right;
     }
 
-    public function build():String
+    public function build(): String
     {
         parent::build();
 
@@ -30,9 +30,8 @@ abstract class AbstractLeftRightOperator extends AbstractOperator {
         return !is_null($this->rightOperand);
     }
 
-    public function values():array
+    public function values(): array
     {
-        return $this->rightOperand instanceof ExpressionInterface? [] : [$this->rightOperand];
+        return $this->rightOperand instanceof ExpressionInterface ? [] : [$this->rightOperand];
     }
-
 }

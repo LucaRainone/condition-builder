@@ -8,14 +8,13 @@ use rain1\ConditionBuilder\Operator\IsNull;
 
 class IsNullTest extends TestCase
 {
-
     public function testConstructor()
     {
-       $isNull = new IsNull("a");
+        $isNull = new IsNull("a");
 
-       self::assertEquals("a IS NULL", $isNull->build());
-       self::assertTrue($isNull->mustBeConsidered());
-       self::assertEquals([], $isNull->values());
+        self::assertEquals("a IS NULL", $isNull->build());
+        self::assertTrue($isNull->mustBeConsidered());
+        self::assertEquals([], $isNull->values());
 
         $isNull = new IsNull("a", true);
 
@@ -29,7 +28,8 @@ class IsNullTest extends TestCase
     }
 
 
-    public function testNot() {
+    public function testNot()
+    {
         $isNull = new IsNull("a");
         $isNull->not();
         self::assertEquals("a IS NOT NULL", $isNull->build());
@@ -37,11 +37,10 @@ class IsNullTest extends TestCase
         self::assertEquals([], $isNull->values());
     }
 
-    public function testNotConfigured() {
+    public function testNotConfigured()
+    {
         $this->expectException(Exception::class);
-        $isNull = new IsNull("a",false);
+        $isNull = new IsNull("a", false);
         $isNull->build();
     }
-
-
 }

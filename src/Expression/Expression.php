@@ -4,7 +4,6 @@ namespace rain1\ConditionBuilder\Expression;
 
 class Expression implements ExpressionInterface
 {
-
     private $expression;
 
     public function __construct(string $expression)

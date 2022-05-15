@@ -2,6 +2,7 @@
 
 namespace rain1\ConditionBuilder\Configuration;
 
-interface ConfigurationInterface {
-	public function getPlaceholder(): string;
+interface ConfigurationInterface
+{
+    public function getPlaceholder(): string;
 }

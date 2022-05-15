@@ -9,7 +9,6 @@ use rain1\ConditionBuilder\Operator\IsBetween;
 
 class IsBetweenTest extends TestCase
 {
-
     public function testConstructor()
     {
         $isBetween = new IsBetween("a", 1, 2);
@@ -74,22 +73,22 @@ class IsBetweenTest extends TestCase
 
     public function testExpressionFull()
     {
-        $isBetween = new IsBetween("a", new Expression("COS1"),new Expression("COS2"));
+        $isBetween = new IsBetween("a", new Expression("COS1"), new Expression("COS2"));
 
         self::assertEquals("a BETWEEN COS1 AND COS2", $isBetween->build());
     }
 
-    public function testExpressionLess() {
+    public function testExpressionLess()
+    {
         $isBetween = new IsBetween("a", null, new Expression("COS2"));
 
         self::assertEquals("a <= COS2", $isBetween->build());
     }
 
-    public function testExpressionGreater() {
+    public function testExpressionGreater()
+    {
         $isBetween = new IsBetween("a", new Expression("COS1"), null);
 
         self::assertEquals("a >= COS1", $isBetween->build());
     }
-
-
 }

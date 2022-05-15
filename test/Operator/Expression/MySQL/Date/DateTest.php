@@ -7,18 +7,15 @@ use rain1\ConditionBuilder\Expression\MySQL\Date\Date;
 
 class DateTest extends TestCase
 {
+    public function testConstructor()
+    {
+        $date = new Date("2019-01-01");
 
-	public function testConstructor()
-	{
-		$date = new Date("2019-01-01");
+        self::assertEquals("'2019-01-01'", "$date");
+    }
 
-		self::assertEquals("'2019-01-01'", "$date");
-	}
-
-	public function testNow()
-	{
-		self::assertEquals("NOW()", Date::now());
-	}
-
-
+    public function testNow()
+    {
+        self::assertEquals("NOW()", Date::now());
+    }
 }

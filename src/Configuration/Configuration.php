@@ -2,8 +2,8 @@
 
 namespace rain1\ConditionBuilder\Configuration;
 
-class Configuration implements ConfigurationInterface {
-    
+class Configuration implements ConfigurationInterface
+{
     private $_placeholder = "?";
 
     public function getPlaceholder(): string
@@ -15,5 +15,4 @@ class Configuration implements ConfigurationInterface {
     {
         $this->_placeholder = $placeholder;
     }
-
 }

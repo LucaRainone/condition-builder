@@ -6,8 +6,9 @@ class IsGreaterOrEqual extends AbstractLeftRightOperator
 {
     protected $operator = ">=";
 
-    public function build():String {
-        $this->operator = $this->isNot? "<" : ">=";
+    public function build(): String
+    {
+        $this->operator = $this->isNot ? "<" : ">=";
         return parent::build();
     }
 }

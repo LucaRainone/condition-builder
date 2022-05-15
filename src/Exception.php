@@ -2,6 +2,6 @@
 
 namespace rain1\ConditionBuilder;
 
-class Exception extends \Exception {
-    
+class Exception extends \Exception
+{
 }

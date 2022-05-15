@@ -2,6 +2,7 @@
 
 namespace rain1\ConditionBuilder\Operator;
 
-class IsNotEqual extends IsEqual {
+class IsNotEqual extends IsEqual
+{
     protected $isNot = true;
 }

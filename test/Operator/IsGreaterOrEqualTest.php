@@ -9,35 +9,36 @@ use rain1\ConditionBuilder\Operator\IsGreaterOrEqual;
 
 class IsGreaterOrEqualTest extends TestCase
 {
-
     public function testConstructor()
     {
-       $isGreaterOrEqual = new IsGreaterOrEqual("a", "b");
+        $isGreaterOrEqual = new IsGreaterOrEqual("a", "b");
 
-       self::assertEquals("a >= ?", $isGreaterOrEqual->build());
-       self::assertTrue($isGreaterOrEqual->mustBeConsidered());
-       self::assertEquals(["b"], $isGreaterOrEqual->values());
+        self::assertEquals("a >= ?", $isGreaterOrEqual->build());
+        self::assertTrue($isGreaterOrEqual->mustBeConsidered());
+        self::assertEquals(["b"], $isGreaterOrEqual->values());
     }
 
 
-    public function testNot() {
-        $isGreaterOrEqual = new IsGreaterOrEqual("a","b");
+    public function testNot()
+    {
+        $isGreaterOrEqual = new IsGreaterOrEqual("a", "b");
         $isGreaterOrEqual->not();
         self::assertEquals("a < ?", $isGreaterOrEqual->build());
         self::assertTrue($isGreaterOrEqual->mustBeConsidered());
         self::assertEquals(["b"], $isGreaterOrEqual->values());
     }
 
-    public function testNotConfigured() {
+    public function testNotConfigured()
+    {
         $this->expectException(Exception::class);
-        $isGreaterOrEqual = new IsGreaterOrEqual("a",null);
+        $isGreaterOrEqual = new IsGreaterOrEqual("a", null);
         $isGreaterOrEqual->build();
     }
 
-    public function testExpression() {
+    public function testExpression()
+    {
         $isGreaterOrEqual = new IsGreaterOrEqual("a", new Expression("NOW()"));
         self::assertEquals("a >= NOW()", $isGreaterOrEqual->build());
         self::assertEquals([], $isGreaterOrEqual->values());
     }
-
 }

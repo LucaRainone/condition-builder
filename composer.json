@@ -18,10 +18,14 @@
     ]
   },
   "require" : {
-    "php" : ">= 7.0"
+    "php" : ">= 7.4",
+    "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5",
     "satooshi/php-coveralls": "^2.0"
+  },
+  "scripts": {
+    "cs" : "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix"
   }
 }

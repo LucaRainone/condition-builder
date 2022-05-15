@@ -2,3 +2,4 @@
 vendor
 composer.phar
 builds
+.php-cs-fixer.cache

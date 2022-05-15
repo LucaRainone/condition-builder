@@ -10,7 +10,6 @@ use rain1\ConditionBuilder\Operator\OperatorInterface;
 
 class ConditionBuilderTest extends TestCase
 {
-
     public function testEmpty()
     {
         $conditionBuilder = self::getInstanceModeAnd();
@@ -81,55 +80,54 @@ class ConditionBuilderTest extends TestCase
         $conditionBuilder = self::getInstanceModeAnd();
         $conditionBuilder->append(new DummyOperator());
         self::assertInstanceOf(ConditionBuilder::class, $conditionBuilder->not());
-        self::assertEquals("!(a DUMMY_OP b ? ? ?)",$conditionBuilder->build());
+        self::assertEquals("!(a DUMMY_OP b ? ? ?)", $conditionBuilder->build());
     }
 
-	public function testToStringMagicMethod()
-	{
-		$conditionBuilder = self::getInstanceModeAnd();
-		self::assertEquals("$conditionBuilder", "(TRUE)");
+    public function testToStringMagicMethod()
+    {
+        $conditionBuilder = self::getInstanceModeAnd();
+        self::assertEquals("$conditionBuilder", "(TRUE)");
+    }
 
-	}
+    public function testInvokeMagicMethod()
+    {
+        $conditionBuilder = self::getInstanceModeAnd();
+        $conditionBuilder->append(new DummyOperator());
+        self::assertEquals([1, 2, 3], $conditionBuilder());
+    }
 
-	public function testInvokeMagicMethod()
-	{
-		$conditionBuilder = self::getInstanceModeAnd();
-		$conditionBuilder->append(new DummyOperator());
-		self::assertEquals([1, 2, 3], $conditionBuilder());
-	}
+    public function testDefaultConfiguration()
+    {
+        $conf = new Configuration();
+        $conf->setPlaceholder("!");
+        ConditionBuilder::setDefaultConfiguration($conf);
+        $conditionBuilder = self::getInstanceModeAnd();
+        $dummyOperator    = new DummyOperator();
+        $conditionBuilder->append($dummyOperator);
+        self::assertEquals("!", $dummyOperator->getConfiguration()->getPlaceholder());
+        ConditionBuilder::setDefaultConfiguration(new Configuration());
+    }
 
-	public function testDefaultConfiguration()
-	{
-		$conf = new Configuration();
-		$conf->setPlaceholder("!");
-		ConditionBuilder::setDefaultConfiguration($conf);
-		$conditionBuilder = self::getInstanceModeAnd();
-		$dummyOperator    = new DummyOperator();
-		$conditionBuilder->append($dummyOperator);
-		self::assertEquals("!", $dummyOperator->getConfiguration()->getPlaceholder());
-		ConditionBuilder::setDefaultConfiguration(new Configuration());
-	}
+    public function testNestedConditionBuilder()
+    {
+        $conditionBuilder = self::getInstanceModeAnd();
+        $conditionBuilderNested = self::getInstanceModeAnd();
+        $conditionBuilder->append($conditionBuilderNested);
 
-	public function testNestedConditionBuilder()
-	{
-		$conditionBuilder = self::getInstanceModeAnd();
-		$conditionBuilderNested = self::getInstanceModeAnd();
-		$conditionBuilder->append($conditionBuilderNested);
+        self::assertEquals("((TRUE))", $conditionBuilder->build());
+    }
 
-		self::assertEquals("((TRUE))", $conditionBuilder->build());
-	}
-
-	public function testDebugInfo()
-	{
-    	$conditionBuilder = self::getInstanceModeAnd();
-    	$conditionBuilder->append(new DummyOperator());
-    	$debug = $conditionBuilder->__debugInfo();
-    	self::assertEquals(["condition", "values", "elements", "desired"], array_keys($debug));
-    	self::assertEquals("(a DUMMY_OP b ? ? ?)", $debug['condition']);
-    	self::assertEquals([1,2,3], $debug['values']);
-    	self::assertInstanceOf(DummyOperator::class, $debug['elements'][0]);
-    	self::assertEquals("(a DUMMY_OP b 1 2 3)", $debug['desired']);
-	}
+    public function testDebugInfo()
+    {
+        $conditionBuilder = self::getInstanceModeAnd();
+        $conditionBuilder->append(new DummyOperator());
+        $debug = $conditionBuilder->__debugInfo();
+        self::assertEquals(["condition", "values", "elements", "desired"], array_keys($debug));
+        self::assertEquals("(a DUMMY_OP b ? ? ?)", $debug['condition']);
+        self::assertEquals([1,2,3], $debug['values']);
+        self::assertInstanceOf(DummyOperator::class, $debug['elements'][0]);
+        self::assertEquals("(a DUMMY_OP b 1 2 3)", $debug['desired']);
+    }
 
     private static function getInstanceModeAnd()
     {
@@ -140,12 +138,10 @@ class ConditionBuilderTest extends TestCase
     {
         return new ConditionBuilder(ConditionBuilder::MODE_OR);
     }
-
 }
 
 class DummyOperator implements OperatorInterface
 {
-
     protected $_mustBeConsidered;
     protected $_conf;
 
@@ -153,12 +149,12 @@ class DummyOperator implements OperatorInterface
     public function __construct($mustBeConsidered = true, Configuration $conf = null)
     {
         $this->_mustBeConsidered = $mustBeConsidered;
-        $this->_conf = $conf?:new Configuration();
+        $this->_conf = $conf ?: new Configuration();
     }
 
-    public function setConfiguration(ConfigurationInterface $conf):OperatorInterface
+    public function setConfiguration(ConfigurationInterface $conf): OperatorInterface
     {
-	    $this->_conf = $conf;
+        $this->_conf = $conf;
         return $this;
     }
 
@@ -167,14 +163,13 @@ class DummyOperator implements OperatorInterface
         return "a DUMMY_OP b ? ? ?";
     }
 
-    public function values():array
+    public function values(): array
     {
         return [1, 2, 3];
     }
 
     public function not()
     {
-
     }
 
     public function mustBeConsidered()
@@ -182,8 +177,8 @@ class DummyOperator implements OperatorInterface
         return $this->_mustBeConsidered;
     }
 
-	public function getConfiguration() {
-		return $this->_conf;
-	}
-
+    public function getConfiguration()
+    {
+        return $this->_conf;
+    }
 }

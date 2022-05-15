@@ -22,8 +22,8 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "phpunit/phpunit": "^6.5",
-    "satooshi/php-coveralls": "^2.0"
+    "phpunit/phpunit": "^9.5",
+    "php-coveralls/php-coveralls": "^2.5"
   },
   "scripts": {
     "cs" : "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix"

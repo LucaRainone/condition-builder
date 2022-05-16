@@ -2,8 +2,12 @@
 
 namespace rain1\ConditionBuilder\Operator;
 
+use rain1\ConditionBuilder\ConditionBuilder;
 use rain1\ConditionBuilder\Expression\ExpressionInterface;
 
+/**
+ * @rain\ConditionBuilder\ConditionBuilder(method="isBetween")
+ */
 class IsBetween extends AbstractOperator
 {
     /**

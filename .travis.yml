@@ -7,7 +7,4 @@ before_install:
   - composer install
 
 script:
-  - vendor/bin/phpunit --configuration phpunit.dist.xml --coverage-clover=builds/coverage/clover.xml test
-
-after_script:
-  - php vendor/bin/php-coveralls -v
+  - vendor/bin/phpunit --configuration phpunit.dist.xml test

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/LucaRainone/condition-builder.svg?branch=master)](https://travis-ci.org/LucaRainone/conditionbuilder)
+[![Build Status](https://app.travis-ci.com/LucaRainone/condition-builder.svg?branch=master)](https://travis-ci.org/LucaRainone/conditionbuilder)
 [![Coverage Status](https://coveralls.io/repos/github/LucaRainone/conditionbuilder/badge.svg?branch=master)](https://coveralls.io/github/LucaRainone/conditionbuilder?branch=master)
 
 This package allows you to build query conditions for PDO-like interfaces.
